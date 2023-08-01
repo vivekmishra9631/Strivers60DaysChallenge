@@ -21,23 +21,30 @@ public:
             return nullptr;
         }
         Node* temp=head;
-        unordered_map<Node*,Node*>mpp;
-        unordered_map<Node*,Node*>mpp1;
+        Node* front=head;
+        
         while(temp!=NULL){
-           Node* newNode = new Node(temp->val);
-            mpp[temp] = newNode;
-            mpp1[temp] = temp->random;
-            temp = temp->next;
+           front=temp->next;
+            Node* copy= new Node(temp->val);
+            temp->next=copy;
+            copy->next=front;
+            temp=front;
         }
         
        temp = head;
         while (temp != NULL) {
-            Node* newNode = mpp[temp];
-            newNode->next = mpp[temp->next];
-            newNode->random = mpp[temp->random];
-            temp = temp->next;
-            newNode=newNode->next;
+            if(temp->random!=NULL) temp->next->random=temp->random->next;
+            temp=temp->next->next;
         }
-        return mpp[head];
+       temp = head;
+        Node* dummy=new Node(0);
+        Node* copy=dummy;
+        while(temp!=NULL){
+            copy->next =temp->next;
+            copy=copy->next;
+            temp->next=copy->next;
+            temp=temp->next;
+        }
+        return dummy->next;
     }
 };
