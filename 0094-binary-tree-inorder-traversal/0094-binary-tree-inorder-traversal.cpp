@@ -19,11 +19,13 @@ public:
                 ans.push_back(cur->val);
                 cur=cur->right;
             }
+            
             else{
                 TreeNode* prev=cur->left;
                 while(prev->right && prev->right!=cur){
                     prev=prev->right;
                 }
+                
                 if(prev->right==NULL){
                     prev->right=cur;
                     cur=cur->left;
@@ -33,7 +35,6 @@ public:
                     ans.push_back(cur->val);
                     prev->right=NULL;
                     cur=cur->right;
-                    
                 }
             }
         }
